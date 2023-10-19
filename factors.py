@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import sys
 
 #function to loop and start factorizing
