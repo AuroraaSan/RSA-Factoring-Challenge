@@ -1,14 +1,19 @@
 #!/usr/bin/python3
-import sympy
+from sys import argv
 
-def factorize_rsa_challenge(filename):
-    with open(filename, 'r') as file:
-        for line in file:
-            n = int(line.strip())
-            p, q = sympy.ntheory.factor_.factorint(n).keys()
-            print(f"{n}={p}*{q}")
-
-if __name__ == '__main__':
-    file_to_factorize = 'tests/rsa-1'  # Provide the path to your test file
-    factorize_rsa_challenge(file_to_factorize)
-
+with open(argv[1]) as f:
+    for line in f:
+        num = int(line)
+        print("{:d}=".format(num), end="")
+        if num % 2 == 0:
+            print("{}*2".format(num//2))
+            continue
+        for i in range(3, num, 2):
+            if num % i == 0:
+                factor = num//i
+                for j in range(3, factor, 2):
+                    if factor % j == 0 or i % j == 0:
+                        break
+                print("{}*{}".format(factor, i))
+                break
+            

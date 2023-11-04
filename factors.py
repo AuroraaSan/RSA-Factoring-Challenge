@@ -1,33 +1,39 @@
-#!/usr/bin/python3
-import sys
+#!/usr/bin/env python3
+""" Factor numbers """
+from sys import argv
+from math import sqrt
 
-#function to loop and start factorizing
-def factorize(n):
-    factors = [] #create list to append factors of input number
-    for i in range(2, n//2 + 1): #loops over i from 2 to half n
-        if n % i == 0:
-            factors.append((i, n // i))
-    return factors
 
-if len(sys.argv) != 2: #check for input
-    print("Usage: factors <file>")
-    sys.exit(1)
-
-try:
-    with open(sys.argv[1], 'r') as file:
-        lines = file.read().splitlines()
-
+def open_read_file(file_name):
+    """read from file
+    add to array
+    """
+    with open(file_name, "r", encoding="utf-8") as file:
+        lines = file.readlines()
+    number_to_factor = []
     for line in lines:
-        n = int(line)
-        factorizations = factorize(n)
-        for p, q in factorizations:
-            print(f"{n}={p}*{q}")
+        number_to_factor.append(int(line))
+    return number_to_factor
 
-except FileNotFoundError:
-    print(f"File {sys.argv[1]} not found.")
-    sys.exit(1)
 
-except ValueError:
-    print("Invalid input in the file. Please ensure all lines are valid natural numbers.")
-    sys.exit(1)
+def find_and_times(n):
+    """factor each
+    n given
+    """
+    for i in range(1, n):
+        if n == ((n // i) * i):
+            print("{}={}*{}".format(n, (n // i), i))
+            break
 
+
+def fac_list(ls):
+    """factor each
+    num in ls
+    """
+    for i in ls:
+        find_and_times(i)
+
+
+if len(argv) == 2:
+    fac_list(open_read_file(argv[1]))
+    
